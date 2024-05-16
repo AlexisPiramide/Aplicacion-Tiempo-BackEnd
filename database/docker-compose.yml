@@ -7,6 +7,9 @@ services:
     ports:
       - "5432:5432"
     restart: always
+    volumes:
+      - ./data:/var/lib/postgresql/data
+      - ./schema.sql:/docker-entrypoint-initdb.d/schema.sql
 
   pgadmin:
     container_name: pgadmin
