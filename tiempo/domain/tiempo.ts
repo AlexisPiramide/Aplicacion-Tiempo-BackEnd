@@ -1,5 +1,5 @@
-import usuario from "./usuario";
-import lugar from "./lugar";
+import Usuario from "../../usuario/domain/usuario";
+import Lugar from "../../lugar/domain/lugar";
 
 export default interface tiempo{
     dia: Date,
@@ -8,6 +8,6 @@ export default interface tiempo{
     humedad: number,
     viento: number,
     direccion_viento: string,
-    usuario: usuario,
-    codigo_postal: lugar,
+    usuario: Usuario,
+    codigo_postal: Lugar,
 }
