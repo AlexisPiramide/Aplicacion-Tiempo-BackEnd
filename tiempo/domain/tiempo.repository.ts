@@ -1,11 +1,13 @@
+import Lugar from "../../lugar/domain/lugar";
+import Usuario from "../../usuario/domain/usuario";
 import Tiempo from "./tiempo";
 
 export default interface tiempoRepository{
-    añadir(tiempo: Tiempo): Promise<Tiempo>;
-    eliminar(tiempo: Tiempo): Promise<Tiempo>;
-    modificar(tiempo: Tiempo): Promise<Tiempo>;
+    añadir(tiempo: Tiempo, usuario:Usuario, lugar: Lugar): Promise<Tiempo>;
+    eliminar(tiempo: Tiempo,lugar: Lugar): Promise<boolean>;
+    modificar(tiempo: Tiempo,lugar:Lugar): Promise<Tiempo>;
 
     buscarPorDia(dia: Date): Promise<Tiempo[]>;
-    buscarPorLugar(codigo_postal: number): Promise<Tiempo[]>;
+    buscarPorLugar(lugar: Lugar): Promise<Tiempo[]>;
 
 }

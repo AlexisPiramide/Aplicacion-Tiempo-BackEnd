@@ -9,6 +9,6 @@ export default interface tiempo{
     viento_maxima: number,
     viento_minima: number,
     probabilidad_precipitacion: number,
-    usuario: Usuario,
+    usuario?: Usuario,
     lugar: Lugar,
 }
