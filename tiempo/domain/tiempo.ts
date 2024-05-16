@@ -3,11 +3,12 @@ import Lugar from "../../lugar/domain/lugar";
 
 export default interface tiempo{
     dia: Date,
-    hora: Date,
-    temperatura: number,
-    humedad: number,
-    viento: number,
-    direccion_viento: string,
+    temperatura_maxima: number,
+    temperatura_minima: number,
+    humedad_media: number,
+    viento_maxima: number,
+    viento_minima: number,
+    probabilidad_precipitacion: number,
     usuario: Usuario,
-    codigo_postal: Lugar,
+    lugar: Lugar,
 }
