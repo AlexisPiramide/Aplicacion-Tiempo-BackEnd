@@ -1,6 +1,8 @@
 export default interface usuario{
+    alias?: string,
     email: string,
     password: string,
-    nombre: string,
-    apellido?: string,    
+    nombre?: string,
+    apellidos?: string,    
+   
 }
