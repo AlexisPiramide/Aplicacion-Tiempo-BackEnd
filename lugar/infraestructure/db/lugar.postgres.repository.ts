@@ -5,13 +5,14 @@ import LugarRepository from '../../domain/lugar.repository'
 export default class lugarPostgresRepository implements LugarRepository{
     
     async getLugares(busqueda: any): Promise<Lugar[]> {
-        const query = `SELECT * FROM lugar WHERE localidad = ${busqueda}`;
+        const query = `SELECT * FROM lugar`;
         try {
             const rows: any[] = await executeQuery(query);
             const lugares: Lugar[] = rows.map((row) => {
                 return {
                     municipio: row.municipio,
                     localidad: row.localidad,
+                    codigo_postal: row.cpostal
                 };
             });
             return lugares;
@@ -20,11 +21,20 @@ export default class lugarPostgresRepository implements LugarRepository{
         }
     }
   
-    buscarLugar(codigo_postal: number): Promise<Lugar> {
-        throw new Error('Method not implemented.');
-    }
-    agregarLugar(lugar: Lugar): Promise<Lugar> {
-        throw new Error('Method not implemented.');
+    async agregarLugar(lugar: Lugar): Promise<Lugar> {
+        const query = `INSERT INTO lugar (cpostal ,municipio, localidad) VALUES ('${lugar.codigo_postal}','${lugar.municipio}', '${lugar.localidad}') RETURNING *`;
+    
+        try {
+            const rows: any[] = await executeQuery(query);
+            const lugar: Lugar = {
+                municipio: rows[0].municipio,
+                localidad: rows[0].localidad,
+            };
+
+            return lugar;
+        } catch (error) {
+            throw new Error('Error en la base de datos');
+        }
     }
     
 }

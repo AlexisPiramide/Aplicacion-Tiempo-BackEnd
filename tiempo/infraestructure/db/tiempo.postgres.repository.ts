@@ -4,17 +4,17 @@ import Lugar from '../../../lugar/domain/lugar';
 import Usuario from '../../../usuario/domain/usuario';
 import executeQuery from '../../../context/postgres.connector';
 
-export default class tiempoPostgresRepository implements TiempoRepository{
+export default class tiempoPostgresRepository implements TiempoRepository {
 
-    async añadir(tiempo: Tiempo, usuario:Usuario, lugar: Lugar ): Promise<Tiempo> {
-        const { dia,temperatura_maxima,temperatura_minima,humedad_media,viento_maxima,viento_minima, probabilidad_precipitacion} = tiempo;
+    async añadir(tiempo: Tiempo, usuario: Usuario, lugar: Lugar): Promise<Tiempo> {
+        const { dia, temperatura_maxima, temperatura_minima, humedad_media, viento_maxima, viento_minima, probabilidad_precipitacion } = tiempo;
 
         const query = `INSERT INTO tiempo (dia, temperatura_maxima, temperatura_minima, humedad_media, viento_maxima, viento_minima, probabilidad_precipitacion, usuario, municipio,localidad) 
         VALUES (${dia},${temperatura_maxima},${temperatura_minima},${humedad_media},${viento_maxima},${viento_minima},${probabilidad_precipitacion},${usuario},${lugar.municipio},${lugar.localidad}) returning *`;
 
         try {
             const rows: any[] = await executeQuery(query);
-            
+
             const lugarDB: Lugar = {
                 municipio: rows[0].municipio,
                 localidad: rows[0].localidad,
@@ -32,11 +32,12 @@ export default class tiempoPostgresRepository implements TiempoRepository{
             };
 
             return tiempoDB;
-        }catch(error){
+        } catch (error) {
             throw new Error('Error en la base de datos');
         }
     }
-    async eliminar(tiempo: Tiempo,lugar: Lugar): Promise<boolean> {
+
+    async eliminar(tiempo: Tiempo, lugar: Lugar): Promise<boolean> {
         const { dia } = tiempo;
 
         const query = `DELETE FROM tiempo WHERE dia = ${dia} AND municipio = ${lugar.municipio} AND localidad = ${lugar.localidad}`;
@@ -44,18 +45,18 @@ export default class tiempoPostgresRepository implements TiempoRepository{
         try {
             const rows: any[] = await executeQuery(query);
             return true;
-        }catch(error){
+        } catch (error) {
             throw new Error('Error en la base de datos');
         }
     }
 
-    async modificar(tiempo: Tiempo,lugar:Lugar): Promise<Tiempo> {
-        const { dia,temperatura_maxima,temperatura_minima,humedad_media,viento_maxima,viento_minima, probabilidad_precipitacion} = tiempo;
+    async modificar(tiempo: Tiempo, lugar: Lugar): Promise<Tiempo> {
+        const { dia, temperatura_maxima, temperatura_minima, humedad_media, viento_maxima, viento_minima, probabilidad_precipitacion } = tiempo;
         const query = `UPDATE tiempo SET temperatura_maxima = ${temperatura_maxima}, temperatura_minima = ${temperatura_minima}, humedad_media = ${humedad_media}, viento_maxima = ${viento_maxima}, viento_minima = ${viento_minima}, probabilidad_precipitacion = ${probabilidad_precipitacion} WHERE dia = ${dia} AND municipio = ${lugar.municipio} AND localidad = ${lugar.localidad} returning *`;
-        
-        try{
+
+        try {
             const rows: any[] = await executeQuery(query);
-            
+
             const lugarDB: Lugar = {
                 municipio: rows[0].municipio,
                 localidad: rows[0].localidad,
@@ -73,15 +74,31 @@ export default class tiempoPostgresRepository implements TiempoRepository{
             };
 
             return tiempoDB;
-        }catch(error){
+        } catch (error) {
             throw new Error('Error en la base de datos');
         }
     }
-    async buscarPorDia(dia: Date): Promise<Tiempo[]> {
-        throw new Error('Method not implemented.');
-    }
+
     async buscarPorLugar(Lugar: Lugar): Promise<Tiempo[]> {
-        throw new Error('Method not implemented.');
+        const query = `SELECT * FROM tiempo WHERE municipio = ${Lugar.municipio} AND localidad = ${Lugar.localidad}`;
+        try {
+            const rows: any[] = await executeQuery(query);
+            const tiempos: Tiempo[] = rows.map((row) => {
+                return {
+                    dia: row.dia,
+                    temperatura_maxima: row.temperatura_maxima,
+                    temperatura_minima: row.temperatura_minima,
+                    humedad_media: row.humedad_media,
+                    viento_maxima: row.viento_maxima,
+                    viento_minima: row.viento_minima,
+                    probabilidad_precipitacion: row.probabilidad_precipitacion,
+                    lugar: Lugar
+                };
+            });
+            return tiempos;
+        } catch (error) {
+            throw new Error('Error en la base de datos');
+        }
     }
 
 }

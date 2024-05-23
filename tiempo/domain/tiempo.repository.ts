@@ -7,7 +7,6 @@ export default interface tiempoRepository{
     eliminar(tiempo: Tiempo,lugar: Lugar): Promise<boolean>;
     modificar(tiempo: Tiempo,lugar:Lugar): Promise<Tiempo>;
 
-    buscarPorDia(dia: Date): Promise<Tiempo[]>;
     buscarPorLugar(lugar: Lugar): Promise<Tiempo[]>;
 
 }

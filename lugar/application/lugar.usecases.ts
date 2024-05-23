@@ -12,4 +12,13 @@ export default class lugarUsecases{
             throw error;
         }
     }
+
+    async agregarLugar(lugar: lugar): Promise<lugar> {
+        try {
+            return this.lugarRepository.agregarLugar(lugar);
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    }
 }

@@ -4,5 +4,4 @@ export default interface usuario{
     password: string,
     nombre?: string,
     apellidos?: string,    
-   
 }

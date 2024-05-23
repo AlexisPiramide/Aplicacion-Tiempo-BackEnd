@@ -9,8 +9,6 @@ export default class usuarioUsecases{
 
     async iniciarSesion(usuario: Usuario): Promise<Usuario> {
         if (!usuario.password) throw new Error("Falta contraseña");
-
-
         try {
             const usuarioBD = await this.usuarioRepository.iniciarSesion(usuario);
             if (!usuarioBD) throw new Error("Usuario no encontrado");

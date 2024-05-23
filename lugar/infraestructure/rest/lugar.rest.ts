@@ -13,11 +13,29 @@ const lugaresUseCases: LugarUseCases = new LugarUseCases(
 const router = express.Router();
 
 router.get("/", async (req: Request, res: Response) => {
-
     const busqueda = req.params
     try {
         const lugares: Lugar[] = await lugaresUseCases.getLugares(busqueda);
         res.json(lugares);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+
+router.post("/", async (req: Request, res: Response) => {
+    const { municipio,codigo_postal,localidad } = req.body;
+    
+    const lugar: Lugar = {
+      municipio,
+      localidad,
+      codigo_postal
+    };
+
+    try {
+        const lugarCreado: Lugar = await lugaresUseCases.agregarLugar(lugar);
+        res.json(lugarCreado);
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: "Internal Server Error" });
