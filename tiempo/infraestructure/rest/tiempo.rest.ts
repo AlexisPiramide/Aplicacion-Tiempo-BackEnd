@@ -50,7 +50,7 @@ router.put("/modificar",isAuth, async (req: Request, res: Response) => {
 });
 
 
-router.get("/buscar",isAuth, async (req: Request, res: Response) => {
+router.get("/buscar", async (req: Request, res: Response) => {
     const busqueda = req.body;
     try {
         const tiempos = await tiempoUseCases.buscarPorLugar(busqueda);
