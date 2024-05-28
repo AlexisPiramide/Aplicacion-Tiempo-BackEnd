@@ -12,7 +12,6 @@ export default class usuarioPostgresRepository implements UsuarioRepository {
                 throw new Error("Usuario/contraseña no es correcto");
             } else {
                 const usuarioDB: Usuario = {
-                    alias: rows[0].alias,
                     email: rows[0].email,
                     password: rows[0].password,
                     nombre: rows[0].nombre,
@@ -27,13 +26,12 @@ export default class usuarioPostgresRepository implements UsuarioRepository {
     }
 
     async registro(usuario: Usuario): Promise<Usuario> {
-        const { alias, password, nombre, apellidos, email } = usuario;
-        const query = `INSERT INTO usuario (alias, password, nombre, apellidos, email) VALUES ('${alias}', '${password}', '${nombre}', '${apellidos}', '${email}') returning *`;
-        
+    
+        const { password, nombre, apellidos, email } = usuario;
+        const query = `INSERT INTO usuario (password, nombre, apellidos, email) VALUES ('${password}', '${nombre}', '${apellidos}', '${email}') returning *`;
         try {
             const rows: any[] = await executeQuery(query);
             const usuarioDB: Usuario = {
-                alias: rows[0].alias,
                 password: rows[0].password,
                 nombre: rows[0].nombre,
                 apellidos: rows[0].apellidos,

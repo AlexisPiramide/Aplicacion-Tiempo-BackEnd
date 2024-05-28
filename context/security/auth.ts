@@ -10,7 +10,7 @@ const decode = (token: string) => {
 const createToken = (user: Usuario): string => {
   const payload = {
     email: user.email,
-    alias: user.alias,
+    nombre: user.nombre
   };
   return jwt.sign(payload, SECRET_KEY, { expiresIn: "1 days" });
 };

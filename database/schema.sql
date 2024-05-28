@@ -9,7 +9,7 @@ CREATE TABLE usuario (
     nombre VARCHAR(50),
     apellidos VARCHAR(50),
     email VARCHAR(50) UNIQUE,
-    password VARCHAR(50)
+    password VARCHAR(255)
 );
 
 CREATE TABLE tiempo (

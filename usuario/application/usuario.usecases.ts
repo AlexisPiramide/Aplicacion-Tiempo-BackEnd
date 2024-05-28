@@ -28,7 +28,6 @@ export default class usuarioUsecases{
         try {
             if (!usuario.password) throw new Error("Falta la contraseña");
             if (!usuario.email) throw new Error("Falta el email");
-            if (!usuario.alias) throw new Error("Falta el alias");
             if (!usuario.nombre) throw new Error("Falta el nombre");
             if (!usuario.apellidos) throw new Error("Falta el apellido");
 
