@@ -80,7 +80,7 @@ export default class tiempoPostgresRepository implements TiempoRepository {
     }
 
     async buscarPorLugar(Lugar: Lugar): Promise<Tiempo[]> {
-        const query = `SELECT * FROM tiempo WHERE municipio = ${Lugar.municipio} AND localidad = ${Lugar.localidad}`;
+        const query = `SELECT * FROM tiempo WHERE municipio ='${Lugar.municipio}' AND localidad ='${Lugar.localidad}'`;
         try {
             const rows: any[] = await executeQuery(query);
             const tiempos: Tiempo[] = rows.map((row) => {

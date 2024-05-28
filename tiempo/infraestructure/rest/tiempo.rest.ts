@@ -4,6 +4,7 @@ import TiempoRepository from "../../domain/tiempo.repository";
 import TiempoRepositoryPostgres from "../db/tiempo.postgres.repository";
 import Tiempo from "../../domain/tiempo";
 import { isAuth } from "../../../context/security/auth";
+import lugar from "../../../lugar/domain/lugar";
 
 const tiempoRepository: TiempoRepository = new TiempoRepositoryPostgres();
 
@@ -20,7 +21,7 @@ router.get("/nuevo",isAuth, async (req: Request, res: Response) => {
         const nuevoTiempo = await tiempoUseCases.añadir(tiempo, usuario, lugar);
         res.json(nuevoTiempo);
     } catch (error) {
-        res.status(400).json({ error: error.message });
+        res.status(500).json({ error: "Internal Server Error" });
     }
 
 });
@@ -32,7 +33,7 @@ router.delete("/eliminar",isAuth, async (req: Request, res: Response) => {
         const eliminado = await tiempoUseCases.eliminar(tiempo, lugar);
         res.json(eliminado);
     } catch (error) {
-        res.status(400).json({ error: error.message });
+        res.status(500).json({ error: "Internal Server Error" });
     }
 
 });
@@ -44,19 +45,24 @@ router.put("/modificar",isAuth, async (req: Request, res: Response) => {
         const modificado = await tiempoUseCases.modificar(tiempo, lugar);
         res.json(modificado);
     } catch (error) {
-        res.status(400).json({ error: error.message });
+        res.status(500).json({ error: "Internal Server Error" });
     }
 
 });
 
 
-router.get("/buscar", async (req: Request, res: Response) => {
-    const busqueda = req.body;
+router.post("/buscar", async (req: Request, res: Response) => {
+    const { municipio, localidad } = req.body;
+    const Lugar: lugar = {
+        municipio,
+        localidad
+    };
     try {
-        const tiempos = await tiempoUseCases.buscarPorLugar(busqueda);
+        const tiempos = await tiempoUseCases.buscarPorLugar(Lugar);
+        console.log(tiempos);
         res.json(tiempos);
     } catch (error) {
-        res.status(400).json({ error: error.message });
+        res.status(500).json({ error: "Internal Server Error" });
     }
 });
 

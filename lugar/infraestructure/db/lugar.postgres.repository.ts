@@ -4,10 +4,11 @@ import LugarRepository from '../../domain/lugar.repository'
 
 export default class lugarPostgresRepository implements LugarRepository{
     
-    async getLugares(busqueda: any): Promise<Lugar[]> {
+    async getLugares(): Promise<Lugar[]> {
         const query = `SELECT * FROM lugar`;
         try {
             const rows: any[] = await executeQuery(query);
+            console.log(rows, 'rows');
             const lugares: Lugar[] = rows.map((row) => {
                 return {
                     municipio: row.municipio,

@@ -4,9 +4,9 @@ import lugarRepository from "../domain/lugar.repository";
 export default class lugarUsecases{
     constructor(private lugarRepository: lugarRepository) { }
 
-    async getLugares(busqueda: any): Promise<lugar[]> {
+    async getLugares(): Promise<lugar[]> {
         try {
-            return this.lugarRepository.getLugares(busqueda);
+            return this.lugarRepository.getLugares();
         } catch (error) {
             console.error(error);
             throw error;

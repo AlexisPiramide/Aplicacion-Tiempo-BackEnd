@@ -1,3 +1,4 @@
+import Lugar from "../../lugar/domain/lugar";
 import Tiempo from "../domain/tiempo";
 import tiempoRepository from "../domain/tiempo.repository";
 
@@ -31,9 +32,9 @@ export default class tiempoUseCases{
         }
     }
 
-    async buscarPorLugar(busqueda: any): Promise<Tiempo[]> {
+    async buscarPorLugar(lugar: Lugar): Promise<Tiempo[]> {
         try {
-            return this.tiempoRepository.buscarPorLugar(busqueda);
+            return this.tiempoRepository.buscarPorLugar(lugar);
         } catch (error) {
             console.error(error);
             throw error;

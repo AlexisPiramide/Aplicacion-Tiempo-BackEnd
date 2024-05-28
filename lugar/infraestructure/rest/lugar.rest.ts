@@ -13,9 +13,8 @@ const lugaresUseCases: LugarUseCases = new LugarUseCases(
 const router = express.Router();
 
 router.get("/", async (req: Request, res: Response) => {
-    const busqueda = req.params
     try {
-        const lugares: Lugar[] = await lugaresUseCases.getLugares(busqueda);
+        const lugares: Lugar[] = await lugaresUseCases.getLugares();
         res.json(lugares);
     } catch (error) {
         console.error(error);
