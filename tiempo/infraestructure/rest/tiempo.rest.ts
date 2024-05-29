@@ -13,7 +13,7 @@ const tiempoUseCases: TiempoUseCases = new TiempoUseCases(
 );
 const router = express.Router();
 
-router.get("/nuevo",isAuth, async (req: Request, res: Response) => {
+router.post("/nuevo",isAuth, async (req: Request, res: Response) => {
     const tiempo = req.body;
     const lugar = req.body;
     const usuario = req.body;
