@@ -6,7 +6,7 @@ import routertiempo from "./tiempo/infraestructure/rest/tiempo.rest";
 import routerusuario from "./usuario/infraestructure/rest/usuario.rest";
 dotenv.config();
 const port = process.env.PORT;
-const allowedOrigins = ["http://localhost:5173"];
+const allowedOrigins = ["http://localhost:5173","https://front:5173"];
 const options: cors.CorsOptions = {
   origin: allowedOrigins,
 };
